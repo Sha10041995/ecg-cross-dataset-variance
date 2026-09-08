@@ -1,0 +1,11 @@
+# Lower bounds, not the exact versions used for the published numbers.
+# See the note in README.md: pin these with `pip freeze` if you need an
+# environment that reproduces the fourth decimal place.
+numpy>=1.23
+scipy>=1.9
+pandas>=1.5
+scikit-learn>=1.2
+torch>=1.13
+matplotlib>=3.6
+wfdb>=4.1
+tqdm>=4.64

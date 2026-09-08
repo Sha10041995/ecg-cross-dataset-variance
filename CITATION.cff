@@ -1,0 +1,90 @@
+cff-version: 1.2.0
+title: >-
+  Training variance in cross-dataset evaluation of ECG classifiers
+message: >-
+  If you use this software, please cite both the software and the
+  paper it accompanies.
+type: software
+authors:
+  - given-names: Sherali
+    family-names: Abdukarimov
+    orcid: 'https://orcid.org/0009-0007-6961-4587'
+    email: abdukarimov1004@gmail.com
+    affiliation: >-
+      Department of Electronic Device Production Technology, Faculty of
+      Electronics and Automation Engineering, Tashkent State Technical
+      University named after Islam Karimov
+  - given-names: Bobur
+    family-names: Gaibnazarov
+    orcid: 'https://orcid.org/0009-0007-8511-4558'
+    affiliation: Tashkent State Technical University named after Islam Karimov
+  - given-names: Ali
+    family-names: Khaydarov
+    orcid: 'https://orcid.org/0009-0005-2049-3564'
+    affiliation: Tashkent State Technical University named after Islam Karimov
+  - given-names: Shakhzod
+    family-names: Kurbonov
+    orcid: 'https://orcid.org/0009-0004-0968-6755'
+    affiliation: Tashkent State Technical University named after Islam Karimov
+  - given-names: Orzigul
+    family-names: Kimizbayeva
+    orcid: 'https://orcid.org/0009-0000-9437-6479'
+    affiliation: Tashkent State Technical University named after Islam Karimov
+  - given-names: Azimjon
+    family-names: Urokov
+    orcid: 'https://orcid.org/0000-0001-6875-1909'
+    affiliation: Tashkent State Technical University named after Islam Karimov
+  - given-names: Makhmud
+    family-names: Makhmudov
+    orcid: 'https://orcid.org/0009-0001-3895-2993'
+    affiliation: Tashkent State Technical University named after Islam Karimov
+  - given-names: Zulfiya
+    family-names: Alimova
+    orcid: 'https://orcid.org/0009-0001-2216-2348'
+    affiliation: Tashkent State Technical University named after Islam Karimov
+repository-code: 'https://github.com/REPLACE-WITH-YOUR-USERNAME/ecg-cross-dataset-variance'
+abstract: >-
+  Code and per-seed results for a study of how much of the reported
+  uncertainty in cross-dataset evaluation of electrocardiogram
+  classifiers comes from the evaluation set and how much from the
+  training procedure. Four detectors spanning supervised deep,
+  unsupervised deep and classical feature-based families are trained on
+  PTB-XL and transferred, frozen, to the MIT-BIH Arrhythmia Database,
+  with five-seed replication and a reverse-direction test.
+keywords:
+  - electrocardiogram
+  - cross-dataset validation
+  - training variance
+  - reproducibility
+  - domain shift
+  - anomaly detection
+license: MIT
+version: 1.0.0
+date-released: '2026-09-08'
+preferred-citation:
+  type: article
+  title: >-
+    Significant but not replicable: training variance in cross-dataset
+    evaluation of ECG classifiers
+  authors:
+    - given-names: Sherali
+      family-names: Abdukarimov
+    - given-names: Bobur
+      family-names: Gaibnazarov
+    - given-names: Ali
+      family-names: Khaydarov
+    - given-names: Shakhzod
+      family-names: Kurbonov
+    - given-names: Orzigul
+      family-names: Kimizbayeva
+    - given-names: Azimjon
+      family-names: Urokov
+    - given-names: Makhmud
+      family-names: Makhmudov
+    - given-names: Zulfiya
+      family-names: Alimova
+  journal: Physiological Measurement
+  year: 2026
+  notes: >-
+    Submitted; manuscript reference PMEA-107521. Replace this entry with
+    the volume, article number and DOI once the paper is published.

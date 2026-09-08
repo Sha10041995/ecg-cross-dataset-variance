@@ -1,0 +1,23 @@
+# Databases - downloaded from PhysioNet, never committed
+data/
+
+# Intermediate arrays and cached scores
+processed/
+
+# Model checkpoints
+*.pt
+
+# Generated figures
+figures/
+
+# Generated result files, except the per-seed run record that the paper cites
+results/*
+!results/multiseed_runs.json
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+.DS_Store
