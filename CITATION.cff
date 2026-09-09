@@ -42,7 +42,7 @@ authors:
     family-names: Alimova
     orcid: 'https://orcid.org/0009-0001-2216-2348'
     affiliation: Tashkent State Technical University named after Islam Karimov
-repository-code: 'https://github.com/REPLACE-WITH-YOUR-USERNAME/ecg-cross-dataset-variance'
+repository-code: 'https://github.com/Sha10041995/ecg-cross-dataset-variance'
 abstract: >-
   Code and per-seed results for a study of how much of the reported
   uncertainty in cross-dataset evaluation of electrocardiogram
