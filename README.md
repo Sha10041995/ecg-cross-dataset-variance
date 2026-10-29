@@ -2,10 +2,12 @@
 
 Code and per-seed results for the paper
 
-> **Significant but not replicable: training variance in cross-dataset evaluation of ECG classifiers**
-> Submitted to *Physiological Measurement* (manuscript PMEA-107521).
+> **Training variance dominates evaluation-set uncertainty in cross-dataset ECG classification**
+> Manuscript in preparation.
 
-Four detectors of ECG abnormality are trained on lead II of PTB-XL and transferred, frozen and without adaptation, to the MIT-BIH Arrhythmia Database. Every deep result is replicated under five random seeds, and the whole experiment is repeated with source and target exchanged.
+Four detectors of ECG abnormality are trained on lead II of PTB-XL and transferred, frozen and without adaptation, to two external databases: the MIT-BIH Arrhythmia Database and the Chapman-Shaoxing/Ningbo database. Every deep result is replicated under five random seeds, the MIT-BIH transfer is repeated with source and target exchanged, and the second external database tests whether the conclusions belong to the models or to the first target.
+
+> **Version 1.1.0 adds the second external database** (Chapman-Shaoxing/Ningbo). Everything in version 1.0.0 is unchanged and still reproduces exactly; the new scripts write to new files and never overwrite the old results.
 
 ## The finding this repository supports
 
@@ -22,6 +24,16 @@ Here the omitted term was the larger one:
 
 `results/multiseed_runs.json` contains the per-seed numbers behind that table, so the discrepancy can be checked without rerunning anything.
 
+The second external database shows that replicating training is necessary but not sufficient. The ordering of the model families depends on the target:
+
+| | MIT-BIH | Chapman-Shaoxing/Ningbo |
+|:--|:--|:--|
+| Supervised CNN, rank among four models | last, 5/5 seeds | first, 5/5 seeds |
+| CNN gap vs autoencoder gap | CNN larger, 5/5 seeds | autoencoder larger, 5/5 seeds |
+| Across-seed SD / evaluation-set SE of the AE − CNN difference | 2.8 | 2.4 (strict label), 5.5 (broad label) |
+
+`results/multiseed3_runs.json` holds the per-seed numbers for all three databases, and `results/three_db_analysis.txt` the paired comparisons and standard errors.
+
 ## Layout
 
 ```
@@ -35,9 +47,18 @@ src/
   multiseed_experiment.py   five-seed replication, forward direction
   reverse_transfer.py       MIT-BIH -> PTB-XL, patient-disjoint split
   classical_baseline.py     28 interpretable features, logistic regression + random forest
-  make_figures.py           figures 1-3 and supplementary figure S1
+  make_figures.py           figures 1-3 and supplementary figure S1 (two-database version)
+  preprocess_chapman.py     Chapman-Shaoxing/Ningbo -> processed/chapman_*.npy
+  multiseed_3db.py          five-seed replication, forward direction, three databases
+  classical_3db.py          feature models scored on Chapman-Shaoxing/Ningbo
+  three_db_analysis.py      paired DeLong tests and standard errors from the saved scores
+  make_figures_3db.py       figures 1 and 3 for three databases
 results/
-  multiseed_runs.json       per-seed results as used in the paper
+  multiseed_runs.json       per-seed results, two databases (version 1.0.0)
+  multiseed3_runs.json      per-seed results, three databases
+  multiseed3_analysis.txt, multiseed3_summary.json
+  classical_chapman.txt, classical_chapman.json
+  three_db_analysis.txt
 docs/
   mapping_to_paper.md       which script produces which table, figure and number
 ```
@@ -67,6 +88,7 @@ Neither database is redistributed here. Both are public:
 
 - PTB-XL v1.0.3 — <https://physionet.org/content/ptb-xl/1.0.3/> (DOI [10.13026/kfzx-aw45](https://doi.org/10.13026/kfzx-aw45))
 - MIT-BIH Arrhythmia Database v1.0.0 — <https://physionet.org/content/mitdb/1.0.0/> (DOI [10.13026/C2F305](https://doi.org/10.13026/C2F305))
+- Chapman-Shaoxing/Ningbo 12-lead database v1.0.0 — <https://physionet.org/content/ecg-arrhythmia/1.0.0/> (DOI [10.13026/wgex-er52](https://doi.org/10.13026/wgex-er52); 2.3 GB zipped, 5.1 GB unpacked)
 
 Download them and place the record files so that the tree looks like:
 
@@ -74,9 +96,10 @@ Download them and place the record files so that the tree looks like:
 data/
   ptbxl/     ptbxl_database.csv, scp_statements.csv, records100/, records500/
   mitbih/    100.dat, 100.hea, 100.atr, ...
+  chapman/   WFDBRecords/01/010/JS00001.hea, JS00001.mat, ...
 ```
 
-The paths `data/ptbxl` and `data/mitbih` are set at the top of the two preprocessing scripts.
+The paths `data/ptbxl`, `data/mitbih` and `data/chapman` are set at the top of the preprocessing scripts. The Chapman download unpacks into a folder with a long name; rename or move it so that `data/chapman/WFDBRecords/` exists.
 
 ## Running it
 
@@ -97,6 +120,21 @@ python src/reverse_transfer.py        # five seeds, reverse direction
 python src/make_figures.py            # figures, from cached results only
 ```
 
+The second external database (version 1.1.0) adds these steps, after the ones above:
+
+```bash
+python src/preprocess_chapman.py --inspect   # headers only, ~10 min; check the SNOMED codes
+python src/preprocess_chapman.py             # ~15 min, writes processed/chapman_*.npy
+python src/classical_3db.py                  # feature models on Chapman, ~5-10 min
+python src/multiseed_3db.py                  # five seeds, three databases, ~35 min
+python src/three_db_analysis.py > results/three_db_analysis.txt
+python src/make_figures_3db.py               # figures 1 and 3, three databases
+```
+
+**Check the inspection output before the full pass.** The normal label for Chapman is "the diagnosis set is exactly sinus rhythm (SNOMED 426783006)". `--inspect` prints the code table so you can confirm that code is sinus rhythm in your copy of the database. The label rule, and a second, broader rule fixed before any model was evaluated on this database, are described in the paper.
+
+**Reproduction check built in.** `multiseed_3db.py` retrains the deep models from the same seeds and compares every PTB-XL and MIT-BIH AUC and every autoencoder threshold with `results/multiseed_runs.json`. It prints `IDENTICAL (bit-for-bit)` per seed, or `DRIFT` if your environment differs, in which case the three-database numbers should not be used. In our environment the difference was exactly 0.0 in all five seeds, and `classical_3db.py` makes the same check for the feature models.
+
 Two of the long scripts take options:
 
 ```bash
@@ -108,7 +146,7 @@ python src/classical_baseline.py --quick
 
 `multiseed_experiment.py` and `reverse_transfer.py` are resumable: a seed already present in the output JSON is skipped, so an interrupted run can be restarted with the same command.
 
-`make_figures.py` recomputes nothing. It reads the cached results, so figures can be regenerated without retraining.
+`make_figures.py` and `make_figures_3db.py` recompute nothing. They read the cached results, so figures can be regenerated without retraining.
 
 ## Cost
 
@@ -118,7 +156,7 @@ That number is part of the argument. Replicating a training procedure five times
 
 ## A note on the EPS figures
 
-`make_figures.py` writes EPS, TIFF and PNG. Microsoft Arial stores no glyph names in its `post` table, and matplotlib's PostScript backend responds by emitting glyph references that the embedded font does not define — so the EPS renders with **every label silently missing** in Ghostscript, in Distiller and in publishers' submission systems, while looking correct in the PNG. The script therefore passes each EPS through Ghostscript with `-dNoOutputFonts`, which converts the text to vector outlines. If Ghostscript is not on your PATH the script warns and leaves the EPS unconverted; use the TIFF versions in that case.
+`make_figures.py` and `make_figures_3db.py` write EPS, TIFF and PNG. Microsoft Arial stores no glyph names in its `post` table, and matplotlib's PostScript backend responds by emitting glyph references that the embedded font does not define — so the EPS renders with **every label silently missing** in Ghostscript, in Distiller and in publishers' submission systems, while looking correct in the PNG. The script therefore passes each EPS through Ghostscript with `-dNoOutputFonts`, which converts the text to vector outlines. If Ghostscript is not on your PATH the script warns and leaves the EPS unconverted; use the TIFF versions in that case.
 
 ## Reproducing the paper's numbers
 
@@ -128,9 +166,9 @@ That number is part of the argument. Replicating a training procedure five times
 
 If you use this code, please cite the paper. Until it has a DOI, cite the manuscript reference:
 
-> Abdukarimov S, Gaibnazarov B, Khaydarov A, Kurbonov S, Kimizbayeva O, Urokov A, Makhmudov M and Alimova Z. Significant but not replicable: training variance in cross-dataset evaluation of ECG classifiers. Submitted to *Physiological Measurement*, manuscript PMEA-107521.
+> Abdukarimov S, Gaibnazarov B, Ergashev A, Kurbonov S, Kimizbayeva O, Urokov A, Makhmudov M and Alimova Z. Training variance dominates evaluation-set uncertainty in cross-dataset ECG classification. Manuscript in preparation.
 
-Please also cite the two databases; their citations are on the PhysioNet pages linked above.
+Please also cite the three databases; their citations are on the PhysioNet pages linked above.
 
 ## Licence
 

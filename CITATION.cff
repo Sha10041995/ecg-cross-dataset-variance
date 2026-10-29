@@ -14,13 +14,16 @@ authors:
       Department of Electronic Device Production Technology, Faculty of
       Electronics and Automation Engineering, Tashkent State Technical
       University named after Islam Karimov
+  - given-names: Shakhnoza
+    family-names: Abdukarimova
+    orcid: 'https://orcid.org/0009-0009-9546-0440'
+    affiliation: Tashkent State Technical University named after Islam Karimov
   - given-names: Bobur
     family-names: Gaibnazarov
     orcid: 'https://orcid.org/0009-0007-8511-4558'
     affiliation: Tashkent State Technical University named after Islam Karimov
-  - given-names: Ali
-    family-names: Khaydarov
-    orcid: 'https://orcid.org/0009-0005-2049-3564'
+  - given-names: Bakhtiyor
+    family-names: Eltazarov
     affiliation: Tashkent State Technical University named after Islam Karimov
   - given-names: Shakhzod
     family-names: Kurbonov
@@ -42,6 +45,10 @@ authors:
     family-names: Alimova
     orcid: 'https://orcid.org/0009-0001-2216-2348'
     affiliation: Tashkent State Technical University named after Islam Karimov
+  - given-names: Aziz
+    family-names: Ergashev
+    orcid: 'https://orcid.org/0009-0006-8340-5987'
+    affiliation: Tashkent State Technical University named after Islam Karimov
 repository-code: 'https://github.com/Sha10041995/ecg-cross-dataset-variance'
 abstract: >-
   Code and per-seed results for a study of how much of the reported
@@ -49,8 +56,9 @@ abstract: >-
   classifiers comes from the evaluation set and how much from the
   training procedure. Four detectors spanning supervised deep,
   unsupervised deep and classical feature-based families are trained on
-  PTB-XL and transferred, frozen, to the MIT-BIH Arrhythmia Database,
-  with five-seed replication and a reverse-direction test.
+  PTB-XL and transferred, frozen, to two external databases (MIT-BIH
+  Arrhythmia and Chapman-Shaoxing/Ningbo), with five-seed replication
+  and a reverse-direction test.
 keywords:
   - electrocardiogram
   - cross-dataset validation
@@ -59,20 +67,22 @@ keywords:
   - domain shift
   - anomaly detection
 license: MIT
-version: 1.0.0
-date-released: '2026-09-08'
+version: 1.1.0
+date-released: '2026-10-29'
 preferred-citation:
   type: article
   title: >-
-    Significant but not replicable: training variance in cross-dataset
-    evaluation of ECG classifiers
+    Training variance dominates evaluation-set uncertainty in
+    cross-dataset ECG classification
   authors:
     - given-names: Sherali
       family-names: Abdukarimov
+    - given-names: Shakhnoza
+      family-names: Abdukarimova
     - given-names: Bobur
       family-names: Gaibnazarov
-    - given-names: Ali
-      family-names: Khaydarov
+    - given-names: Bakhtiyor
+      family-names: Eltazarov
     - given-names: Shakhzod
       family-names: Kurbonov
     - given-names: Orzigul
@@ -83,8 +93,9 @@ preferred-citation:
       family-names: Makhmudov
     - given-names: Zulfiya
       family-names: Alimova
-  journal: Physiological Measurement
+    - given-names: Aziz
+      family-names: Ergashev
   year: 2026
   notes: >-
-    Submitted; manuscript reference PMEA-107521. Replace this entry with
-    the volume, article number and DOI once the paper is published.
+    Manuscript in preparation. Replace this entry with the journal,
+    volume, article number and DOI once the paper is published.

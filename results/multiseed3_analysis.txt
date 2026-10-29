@@ -1,0 +1,80 @@
+==============================================================================
+MULTI-SEED REPLICATION -- ECG cross-dataset anomaly detection
+seeds = [0, 1, 2, 3, 4]   (n = 5 independent trainings per model)
+Everything held fixed except the random seed.
+==============================================================================
+
+PER-SEED RESULTS
+------------------------------------------------------------------------------
+ seed |  CNN PTB  CNN MIT  CNN gap |   AE PTB   AE MIT   AE gap | gap diff
+------------------------------------------------------------------------------
+    0 |   0.8849   0.7261   0.1588 |   0.7547   0.7277   0.0271 |   0.1317
+    1 |   0.8869   0.7106   0.1763 |   0.7500   0.7151   0.0349 |   0.1414
+    2 |   0.8869   0.7085   0.1784 |   0.7565   0.7458   0.0106 |   0.1678
+    3 |   0.8883   0.6783   0.2100 |   0.7393   0.7021   0.0372 |   0.1728
+    4 |   0.8886   0.7101   0.1785 |   0.7510   0.6961   0.0549 |   0.1236
+------------------------------------------------------------------------------
+
+ACROSS-SEED SUMMARY  (mean +/- SD [95% CI of the mean], min-max)
+------------------------------------------------------------------------------
+  CNN  AUC  PTB-XL           0.8871 +/- 0.0014  [0.8853, 0.8889]   (0.8849 - 0.8886)
+  CNN  AUC  MIT-BIH          0.7067 +/- 0.0174  [0.6851, 0.7284]   (0.6783 - 0.7261)
+  CNN  generalization gap    0.1804 +/- 0.0185  [0.1574, 0.2034]   (0.1588 - 0.2100)
+  AE   AUC  PTB-XL           0.7503 +/- 0.0067  [0.7420, 0.7586]   (0.7393 - 0.7565)
+  AE   AUC  MIT-BIH          0.7174 +/- 0.0200  [0.6925, 0.7422]   (0.6961 - 0.7458)
+  AE   generalization gap    0.0329 +/- 0.0161  [0.0130, 0.0529]   (0.0106 - 0.0549)
+  DIFFERENCE of gaps         0.1475 +/- 0.0219  [0.1203, 0.1746]   (0.1236 - 0.1728)
+
+SECONDARY METRICS  (mean +/- SD across seeds)
+------------------------------------------------------------------------------
+  CNN  / PTB-XL : Accuracy=0.795+/-0.007  Precision=0.873+/-0.039  Recall=0.765+/-0.063  F1=0.813+/-0.017  Specificity=0.837+/-0.073  BalancedAcc=0.801+/-0.005
+  AE   / PTB-XL : Accuracy=0.679+/-0.006  Precision=0.769+/-0.007  Recall=0.646+/-0.020  F1=0.702+/-0.010  Specificity=0.726+/-0.018  BalancedAcc=0.686+/-0.005
+  CNN  / MIT-BIH: Accuracy=0.659+/-0.021  Precision=0.624+/-0.020  Recall=0.872+/-0.045  F1=0.727+/-0.015  Specificity=0.430+/-0.070  BalancedAcc=0.651+/-0.022
+  AE   / MIT-BIH: Accuracy=0.662+/-0.024  Precision=0.669+/-0.027  Recall=0.697+/-0.035  F1=0.682+/-0.021  Specificity=0.625+/-0.052  BalancedAcc=0.661+/-0.024
+
+==============================================================================
+SIGNIFICANCE TESTS ACROSS SEEDS  (paired: same seed, both models)
+==============================================================================
+  Paired t-test on the generalization gap (CNN vs AE), n=5 seeds:
+    t(4) = 15.091   p = 0.0001124
+    Cohen's d_z = 6.75  (mean difference / SD of differences)
+  Wilcoxon signed-rank (distribution-free): W = 0.0, p = 0.0625
+    NOTE: with n=5 the smallest attainable two-sided p is 0.0625;
+    the test is reported for completeness, not as the primary evidence.
+
+  Ordering reversal (CNN better in-domain AND worse cross-dataset)
+    observed in 4 / 5 seeds.
+  CNN gap larger than AE gap in 5 / 5 seeds.
+
+==============================================================================
+THIRD DATABASE: Chapman-Shaoxing/Ningbo (mild shift; clinical -> clinical)
+==============================================================================
+ seed |  CNN CHA  CNN gap |   AE CHA   AE gap |   AE-CNN
+    0 |   0.7388   0.1461 |   0.5825   0.1723 |  -0.1564
+    1 |   0.7374   0.1496 |   0.5801   0.1699 |  -0.1573
+    2 |   0.7364   0.1505 |   0.5909   0.1656 |  -0.1455
+    3 |   0.7470   0.1412 |   0.5778   0.1615 |  -0.1692
+    4 |   0.7325   0.1561 |   0.5750   0.1760 |  -0.1575
+  CNN  AUC  Chapman                0.7384 +/- 0.0054  [0.7318, 0.7451]   (0.7325 - 0.7470)
+  CNN  gap  Chapman                0.1487 +/- 0.0055  [0.1419, 0.1555]   (0.1412 - 0.1561)
+  AE   AUC  Chapman                0.5813 +/- 0.0061  [0.5737, 0.5888]   (0.5750 - 0.5909)
+  AE   gap  Chapman                0.1690 +/- 0.0057  [0.1620, 0.1761]   (0.1615 - 0.1760)
+  DIFFERENCE of gaps (Chapman)     -0.0203 +/- 0.0039  [-0.0252, -0.0154]   (-0.0262 - -0.0150)
+  AE - CNN target AUC (Chapman)    -0.1572 +/- 0.0084  [-0.1676, -0.1467]   (-0.1692 - -0.1455)
+  CNN  AUC  Chapman, broad label   0.8511 +/- 0.0047  [0.8453, 0.8569]   (0.8453 - 0.8558)
+  AE   AUC  Chapman, broad label   0.6569 +/- 0.0089  [0.6459, 0.6680]   (0.6436 - 0.6670)
+  Paired t-test on the Chapman gap (CNN vs AE), n=5: t(4) = -11.521  p = 0.0003241
+  AE - CNN on Chapman target AUC: mean -0.1572, SD 0.0084, AE ahead in 0/5 seeds, t(4) = -41.824  p = 1.953e-06
+  Seed SD of CNN AUC: source 0.0014, Chapman 0.0054 (ratio 3.7x)
+  Seed SD of CNN AUC: MIT-BIH 0.0174
+
+==============================================================================
+READY-TO-PASTE TEXT FOR THE MANUSCRIPT
+==============================================================================
+  Across 5 independent trainings differing only in random seed, the supervised
+  baseline reached AUC 0.887 +/- 0.001 on PTB-XL and 0.707 +/- 0.017 on MIT-BIH,
+  while the autoencoder reached 0.750 +/- 0.007 and 0.717 +/- 0.020 respectively.
+  The generalization gap was 0.180 +/- 0.018 for the supervised model and
+  0.033 +/- 0.016 for the autoencoder; the difference of 0.147 +/- 0.022
+  (95% CI [0.120, 0.175]) was in the same direction in every seed
+  (paired t(4) = 15.09, p = 0.000112).

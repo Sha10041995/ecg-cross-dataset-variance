@@ -1,0 +1,38 @@
+REPRO vs original multiseed_runs.json
+  seed 0: max abs diff = 0.000e+00
+  seed 1: max abs diff = 0.000e+00
+  seed 2: max abs diff = 0.000e+00
+  seed 3: max abs diff = 0.000e+00
+  seed 4: max abs diff = 0.000e+00
+
+== Chapman strict label ==
+  seed 0: AE-CNN -0.1564 (DeLong SE 0.0035, p=0) | CNN-LR +0.0176 p=8.1e-16 | CNN-RF +0.0220 p=2.4e-28
+  seed 1: AE-CNN -0.1573 (DeLong SE 0.0034, p=0) | CNN-LR +0.0161 p=3.3e-13 | CNN-RF +0.0206 p=1.4e-25
+  seed 2: AE-CNN -0.1455 (DeLong SE 0.0034, p=0) | CNN-LR +0.0151 p=4.3e-12 | CNN-RF +0.0196 p=3.5e-23
+  seed 3: AE-CNN -0.1692 (DeLong SE 0.0037, p=0) | CNN-LR +0.0257 p=3.5e-34 | CNN-RF +0.0302 p=6.2e-54
+  seed 4: AE-CNN -0.1575 (DeLong SE 0.0033, p=0) | CNN-LR +0.0112 p=3.9e-07 | CNN-RF +0.0157 p=1.7e-16
+  AE-CNN across seeds: mean -0.1572, SD 0.0084; mean eval-set SE 0.0034; ratio SD/SE = 2.4
+
+== Chapman broad label ==
+  seed 0: AE-CNN -0.1884 (DeLong SE 0.0023, p=0) | CNN-LR +0.0478 p=7.3e-241 | CNN-RF +0.0127 p=3e-23
+  seed 1: AE-CNN -0.1980 (DeLong SE 0.0022, p=0) | CNN-LR +0.0529 p=2.1e-282 | CNN-RF +0.0178 p=1.8e-44
+  seed 2: AE-CNN -0.1783 (DeLong SE 0.0022, p=0) | CNN-LR +0.0424 p=1.1e-189 | CNN-RF +0.0073 p=1.9e-08
+  seed 3: AE-CNN -0.2121 (DeLong SE 0.0024, p=0) | CNN-LR +0.0528 p=1.2e-305 | CNN-RF +0.0177 p=3.8e-44
+  seed 4: AE-CNN -0.1940 (DeLong SE 0.0022, p=0) | CNN-LR +0.0450 p=3.8e-209 | CNN-RF +0.0099 p=3.9e-15
+  AE-CNN across seeds: mean -0.1942, SD 0.0125; mean eval-set SE 0.0023; ratio SD/SE = 5.5
+
+== MIT-BIH (for comparison; same scores as in the paper) ==
+  seed 0: AE-CNN +0.0015 (DeLong SE 0.0070, p=0.83) | CNN-LR -0.0769 p=7e-57 | CNN-RF -0.0588 p=1e-34
+  seed 1: AE-CNN +0.0045 (DeLong SE 0.0071, p=0.53) | CNN-LR -0.0924 p=5.9e-78 | CNN-RF -0.0743 p=2.6e-55
+  seed 2: AE-CNN +0.0373 (DeLong SE 0.0068, p=3.6e-08) | CNN-LR -0.0946 p=1.1e-82 | CNN-RF -0.0764 p=2.5e-54
+  seed 3: AE-CNN +0.0238 (DeLong SE 0.0077, p=0.002) | CNN-LR -0.1248 p=1.3e-134 | CNN-RF -0.1067 p=3e-100
+  seed 4: AE-CNN -0.0140 (DeLong SE 0.0071, p=0.048) | CNN-LR -0.0930 p=2.9e-81 | CNN-RF -0.0749 p=1.7e-54
+  AE-CNN across seeds: mean +0.0106, SD 0.0201; mean eval-set SE 0.0071; ratio SD/SE = 2.8
+
+CNN/AE AUC on Chapman broad label per seed vs classical:
+  LR 0.8029 RF 0.838
+  seed 0 CNN 0.8507 AE 0.6624
+  seed 1 CNN 0.8558 AE 0.6578
+  seed 2 CNN 0.8453 AE 0.667
+  seed 3 CNN 0.8557 AE 0.6436
+  seed 4 CNN 0.8479 AE 0.654
