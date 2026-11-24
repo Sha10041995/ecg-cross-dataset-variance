@@ -1,9 +1,13 @@
 # Training variance in cross-dataset evaluation of ECG classifiers
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24491342.svg)](https://doi.org/10.5281/zenodo.24491342)
+
 Code and per-seed results for the paper
 
 > **Training variance dominates evaluation-set uncertainty in cross-dataset ECG classification**
 > Submitted for peer review (November 2026).
+
+Archived release v1.1.1: <https://doi.org/10.5281/zenodo.24491342>. Cite this DOI when you refer to the exact code and per-seed results that accompany the manuscript.
 
 Four detectors of ECG abnormality are trained on lead II of PTB-XL and transferred, frozen and without adaptation, to two external databases: the MIT-BIH Arrhythmia Database and the Chapman-Shaoxing/Ningbo database. Every deep result is replicated under five random seeds, the MIT-BIH transfer is repeated with source and target exchanged, and the second external database tests whether the conclusions belong to the models or to the first target.
 
