@@ -3,7 +3,7 @@
 Code and per-seed results for the paper
 
 > **Training variance dominates evaluation-set uncertainty in cross-dataset ECG classification**
-> Manuscript in preparation.
+> Submitted for peer review (November 2026).
 
 Four detectors of ECG abnormality are trained on lead II of PTB-XL and transferred, frozen and without adaptation, to two external databases: the MIT-BIH Arrhythmia Database and the Chapman-Shaoxing/Ningbo database. Every deep result is replicated under five random seeds, the MIT-BIH transfer is repeated with source and target exchanged, and the second external database tests whether the conclusions belong to the models or to the first target.
 
@@ -164,9 +164,9 @@ That number is part of the argument. Replicating a training procedure five times
 
 ## Citing
 
-If you use this code, please cite the paper. Until it has a DOI, cite the manuscript reference:
+If you use this code, please cite the paper. Until the paper is published, cite the manuscript reference below (GitHub's "Cite this repository" button reads `CITATION.cff`, which carries the same information):
 
-> Abdukarimov S, Gaibnazarov B, Ergashev A, Kurbonov S, Kimizbayeva O, Urokov A, Makhmudov M and Alimova Z. Training variance dominates evaluation-set uncertainty in cross-dataset ECG classification. Manuscript in preparation.
+> Abdukarimov S, Abdukarimova S, Gaibnazarov B, Eltazarov B, Kurbonov S, Kimizbayeva O, Urokov A, Makhmudov M, Alimova Z and Ergashev A. Training variance dominates evaluation-set uncertainty in cross-dataset ECG classification. Submitted for peer review, 2026.
 
 Please also cite the three databases; their citations are on the PhysioNet pages linked above.
 

@@ -17,13 +17,14 @@ authors:
   - given-names: Shakhnoza
     family-names: Abdukarimova
     orcid: 'https://orcid.org/0009-0009-9546-0440'
-    affiliation: Tashkent State Technical University named after Islam Karimov
+    affiliation: Kimyo International University in Tashkent
   - given-names: Bobur
     family-names: Gaibnazarov
     orcid: 'https://orcid.org/0009-0007-8511-4558'
     affiliation: Tashkent State Technical University named after Islam Karimov
   - given-names: Bakhtiyor
     family-names: Eltazarov
+    orcid: 'https://orcid.org/0009-0005-8040-7373'
     affiliation: Tashkent State Technical University named after Islam Karimov
   - given-names: Shakhzod
     family-names: Kurbonov
@@ -67,8 +68,8 @@ keywords:
   - domain shift
   - anomaly detection
 license: MIT
-version: 1.1.0
-date-released: '2026-10-29'
+version: 1.1.1
+date-released: '2026-11-24'
 preferred-citation:
   type: article
   title: >-
@@ -97,5 +98,6 @@ preferred-citation:
       family-names: Ergashev
   year: 2026
   notes: >-
-    Manuscript in preparation. Replace this entry with the journal,
-    volume, article number and DOI once the paper is published.
+    Submitted for peer review (November 2026). Replace this entry with
+    the journal, volume, article number and DOI once the paper is
+    published.
